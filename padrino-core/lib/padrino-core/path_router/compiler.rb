@@ -50,6 +50,7 @@ module Padrino
       def call_by_request(request)
         rotation do |offset|
           pattern  = encode_default_external(request.path_info)
+          pattern = pattern.split(/%2F|%2f/, -1).map{ |part| Rack::Utils.unescape(part) }.join('%2F')
           if route = match?(offset, pattern)
             params = route.params_for(pattern, request.params)
             yield(route, params) if route.verb == request.request_method

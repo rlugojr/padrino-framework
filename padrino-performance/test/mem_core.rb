@@ -12,18 +12,18 @@ module MockBenchmark
 
   module Settings
     def bench_range
-      [20, 80, 320, 1280]
+      [20, 80, 320, 1280, 5120]
     end
 
     def run(*)
       puts 'Running ' + self.name
       puts `pmap -x #{$$} | tail -1`
-      report = MemoryProfiler.report do
+#      report = MemoryProfiler.report do
         super
-      end
+#      end
       puts `pmap -x #{$$} | tail -1`
       #puts `pmap -x #{$$}`
-      report.pretty_print
+#      report.pretty_print
     end
   end
 
@@ -99,7 +99,7 @@ class Padrino::HugeRouterBenchmark < Minitest::Benchmark
     @pathss = {}
     @requests = {}
     self.class.bench_range.each do |n|
-      @pathss[n] = paths = (1..n/20).map{ rand(36**8).to_s(36) }
+      @pathss[n] = paths = (1..n/5).map{ rand(36**8).to_s(36) }
       @apps[n] = Sinatra.new Padrino::Application do
         paths.each do |p|
           get("/#{p}") { p.to_s }
