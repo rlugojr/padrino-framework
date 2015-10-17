@@ -40,6 +40,7 @@ group :development do
   end
   gem "mocha",    ">= 0.10.0"
   gem "minitest", ">= 4.0"
+  gem "memory_profiler"
 end
 
 load File.expand_path('../padrino/subgems.rb', __FILE__)
